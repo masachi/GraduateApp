@@ -8,6 +8,7 @@ import {Text, View, StyleSheet, Platform, TouchableOpacity, ListView} from 'reac
 import theme from '../config/theme';
 import px2dp from '../util/px2dp';
 import NotificationInfo from './NotificationInfo';
+import WebViewPage from './WebViewPage';
 
 export default class NotificationFragment extends Component {
     // 构造
@@ -28,7 +29,7 @@ export default class NotificationFragment extends Component {
 
     _onItemClick(url) {
         this.props.navigator.push({
-            component: NotificationInfo,
+            component: WebViewPage,
             params: {
                 url: url,
             }

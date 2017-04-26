@@ -18,7 +18,7 @@ export default class WebViewPage extends PageComponent{
         const data = this.props.rowData;
         return(
             <View style={{flex: 1}}>
-                <NavigationBar userInfo={data.user} onPress={this._handleBack.bind(this)}/>
+                <NavigationBar title={'详情'} onPress={this._handleBack.bind(this)}/>
                 <WebView
                     source={{uri: data.url}}
                     style={styles.webView}
@@ -27,14 +27,14 @@ export default class WebViewPage extends PageComponent{
                     onLoad={this._showTips.bind(this, 'load')}
                     onError={this._showTips.bind(this, 'error')}
                 />
-                <View style={styles.bottom}>
-                    <Icon name="favorite-border" color='#58c900' size={px2dp(22)}/>
-                    <Icon name="chat-bubble-outline" size={px2dp(22)} color={theme.grayColor} style={{marginLeft: px2dp(17)}}/>
-                    <Icon name="share" size={px2dp(22)} color={theme.grayColor} style={{marginLeft: px2dp(17)}}/>
-                    <View style={styles.info}>
-                        <Text style={{fontSize: 13}}>阅读 {data.viewsCount} • 收藏 {data.collectionCount} • 评论 {data.commentsCount}</Text>
-                    </View>
-                </View>
+                {/*<View style={styles.bottom}>*/}
+                    {/*<Icon name="favorite-border" color='#58c900' size={px2dp(22)}/>*/}
+                    {/*<Icon name="chat-bubble-outline" size={px2dp(22)} color={theme.grayColor} style={{marginLeft: px2dp(17)}}/>*/}
+                    {/*<Icon name="share" size={px2dp(22)} color={theme.grayColor} style={{marginLeft: px2dp(17)}}/>*/}
+                    {/*<View style={styles.info}>*/}
+                        {/*<Text style={{fontSize: 13}}>阅读 {data.viewsCount} • 收藏 {data.collectionCount} • 评论 {data.commentsCount}</Text>*/}
+                    {/*</View>*/}
+                {/*</View>*/}
             </View>
         );
     }
