@@ -4,38 +4,77 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Platform, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Platform, TouchableOpacity, ListView} from 'react-native';
 import theme from '../config/theme';
 import px2dp from '../util/px2dp';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-import SimpleTabBar from '../component/SimpleTabBar';
-import SignInPage from './SignInAndSignup/SignInPage';
+import NotificationInfo from './NotificationInfo';
 
-export default class NotificationFragment extends Component{
+export default class NotificationFragment extends Component {
+    // 构造
+    constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+            dataBlob: 4,
+        };
+    }
 
-    render(){
-        return(
-            <View style={styles.container}>
-                <ScrollableTabView
-                    renderTabBar={() => <SimpleTabBar />}
-                    tabBarBackgroundColor="rgb(22,131,251)"
-                    tabBarActiveTextColor="white"
-                    tabBarInactiveTextColor="rgba(255,255,255,0.5)"
-                    tabBarTextStyle={{fontSize: theme.scrollView.fontSize}}
-                    tabBarUnderlineStyle={theme.scrollView.underlineStyle}>
-                    <View tabLabel="消息" style={styles.content}>
-                        <Text style={{marginBottom: px2dp(10)}}>currently there are no any messages</Text>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigator.push({
-                                    component: SignInPage
-                                });
-                            }}
-                            activeOpacity={theme.btnActiveOpacity}>
-                            <Text style={{color: theme.themeColor}}>登录</Text>
-                        </TouchableOpacity>
+    componentDidMount() {
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows([1, 2, 3, 4]),
+        });
+    }
+
+    _onItemClick(url) {
+        this.props.navigator.push({
+            component: NotificationInfo,
+            params: {
+                url: url,
+            }
+        });
+    }
+
+    _renderRow() {
+        return (
+            <TouchableOpacity style={{height: 80}} onPress={this._onItemClick.bind(this, 'www.baidu.com')}>
+                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{flex: 1, justifyContent: 'flex-start'}}>
+                        <Text style={{fontSize: 20, textAlign: 'left', paddingLeft: 10}}>title</Text>
                     </View>
-                </ScrollableTabView>
+                    <View style={{flex: 1, justifyContent: 'flex-end'}}>
+                        <Text style={{fontSize: 16, textAlign: 'right', paddingRight: 10}}>time</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    _renderSeparator() {
+        return (
+            <View style={styles.separator}></View>
+        )
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                {
+                    this.state.dataBlob === 0 ?
+                        <Text style={{marginBottom: px2dp(10)}}>并没有什么消息</Text>
+                        :
+                        <View style={{flex: 1}}>
+                            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Text style={{fontSize: 13}}>只显示近期10条消息</Text>
+                            </View>
+                            <View style={styles.separator}></View>
+                            <ListView
+                                renderRow={this._renderRow.bind(this)}
+                                dataSource={this.state.dataSource}
+                            />
+                        </View>
+
+                }
             </View>
         );
     }
@@ -52,5 +91,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    separator: {
+        height: 1,
+        backgroundColor: '#707070'
+    },
 });

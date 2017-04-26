@@ -67,7 +67,8 @@ export default class HotPanel extends Component{
                     </View>
                     <View style={{height: 1 / PixelRatio.get(), backgroundColor: '#f1f1f1'}}></View>
                     <View style={styles.list}>
-                        {data.map((item, index) => {
+                        {
+                            data.map((item, index) => {
                             if(Platform.OS === 'ios'){
                             return(
                                 <TouchableOpacity

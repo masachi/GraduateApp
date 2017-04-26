@@ -14,6 +14,9 @@ export default class IndividualPage extends PageComponent{
         return(
             <View style={{flex: 1}}>
                 <NavigationBar title="个人主页" backOnPress={this._handleBack.bind(this)}/>
+                <View>
+
+                </View>
             </View>
         );
     }

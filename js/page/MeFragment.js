@@ -10,6 +10,7 @@ import TextButton from '../component/TextButton';
 import SettingPage from './SettingPage';
 import IndividualPage from './IndividualPage';
 import SignInPage from './SignInAndSignup/SignInPage';
+import CalendarPage from './CalendarFragment';
 
 export default class MeFragment extends Component{
     constructor(props){
@@ -52,6 +53,11 @@ export default class MeFragment extends Component{
                    component: SettingPage
                });
                break;
+           }
+           case 7:{
+               this.props.navigator.push({
+                   component: CalendarPage
+               });
            }
        }
     }

@@ -9,6 +9,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.juejinclient.module.calendar.ReactMaterialCalendarViewPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(), new VectorIconsPackage(), new MyReactPackage()
+          new MainReactPackage(), new VectorIconsPackage(), new MyReactPackage(), new ReactMaterialCalendarViewPackage()
       );
     }
   };

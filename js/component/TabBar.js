@@ -7,6 +7,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import HomeFragment from '../page/HomeFragment';
 import CompassFragment from '../page/CompassFragment';
 import MeFragment from '../page/MeFragment';
+import CalendarFragment from '../page/CalendarFragment';
 import NotifyFragment from '../page/NotificationFragment';
 import px2dp from '../util/px2dp';
 
@@ -21,7 +22,7 @@ export default class TabBar extends Component {
         super(props);
         this.state = {
             selectedTab: 'home',
-            tabName: ['首页', '成绩', '消息', '我'],
+            tabName: ['首页', '成绩', '日历', '消息', '我'],
             activeTab: 4,
         };
         this.changeActiveTab();
@@ -98,6 +99,16 @@ export default class TabBar extends Component {
                 <TabNavigator.Item
                     tabStyle={styles.tabStyle}
                     title={tabName[2]}
+                    selected={this.state.selectedTab === 'calendar'}
+                    selectedTitleStyle={{color: selectedColor}}
+                    renderIcon={() => <Image style={styles.tab} source={this.state.compassNormal}/>}
+                    renderSelectedIcon={() => <Image style={styles.tab} source={this.state.compassSelected}/>}
+                    onPress={() => this.setState({selectedTab: 'calendar'})}>
+                    {<CalendarFragment />}
+                </TabNavigator.Item>
+                <TabNavigator.Item
+                    tabStyle={styles.tabStyle}
+                    title={tabName[3]}
                     selected={this.state.selectedTab === 'notification'}
                     selectedTitleStyle={{color: selectedColor}}
                     renderIcon={() => <Image style={styles.tab} source={this.state.notificationNormal}/>}
@@ -107,7 +118,7 @@ export default class TabBar extends Component {
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     tabStyle={styles.tabStyle}
-                    title={tabName[3]}
+                    title={tabName[4]}
                     selected={this.state.selectedTab === 'me'}
                     selectedTitleStyle={{color: selectedColor}}
                     renderIcon={() => <Image style={styles.tab} source={this.state.meNormal}/>}

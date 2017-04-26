@@ -7,6 +7,7 @@ import px2dp from '../util/px2dp';
 import theme from '../config/theme';
 import NavigationBar from '../component/SimpleNavigationBar';
 import PageComponent from './BackPageComponent';
+import About from './About';
 
 export default class SettingPage extends PageComponent{
     constructor(props){
@@ -16,16 +17,19 @@ export default class SettingPage extends PageComponent{
         };
     }
 
+    onPressAbout(){
+        this.props.navigator.push({
+            component: About,
+        });
+    }
+
     render(){
         return(
             <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
                 <NavigationBar title="设置" backOnPress={this._handleBack.bind(this)}/>
                 <ScrollView>
                     <View style={styles.list}>
-                        <Item text="推送消息" isHasSwitcher={true} name={'push_notification'} switcherValue={true}/>
-                    </View>
-                    <View style={styles.list}>
-                        <Item text="关于" />
+                        <Item text="关于" onPress={this.onPressAbout.bind(this)}/>
                     </View>
                     {/*--------------------------------------------------------------------------*/}
                 </ScrollView>

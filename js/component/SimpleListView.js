@@ -78,7 +78,7 @@ export default class SimpleListView extends Component{
         if(this.props.isRenderHeader) {
             return (
                 <View style={styles.header}>
-                    <Text>热门文章</Text>
+                    <Text>成绩</Text>
                 </View>
             );
         }

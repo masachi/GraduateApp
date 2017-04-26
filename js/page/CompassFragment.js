@@ -42,7 +42,6 @@ export default class CompassFragment extends Component {
             refreshing: true,
             loadedData: false,
             dataBlob: [],
-            btnName: ['沸点', '贡献榜', '本周最热']
         }
         this._fetchData = this._fetchData.bind(this);
         this._onDismissRefresh = this._onDismissRefresh.bind(this);
@@ -51,7 +50,6 @@ export default class CompassFragment extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <SearchBar onPress={this._searchButtonCallback.bind(this)}/>
                 <ScrollView
                     refreshControl={
                         <RefreshControl
@@ -63,32 +61,6 @@ export default class CompassFragment extends Component {
                             titleColor={theme.themeColor}
                         />
                     }>
-                    <Swiper
-                        height={px2dp(130)}
-                        autoplay={true}
-                        bounces={true}>
-                        <View style={styles.slide}>
-                            <Image style={styles.image} source={bannerImages[0]} resizeMode="stretch"/>
-                        </View>
-                        <View style={styles.slide}>
-                            <Image style={styles.image} source={bannerImages[1]} resizeMode="stretch"/>
-                        </View>
-                    </Swiper>
-                    <View style={styles.imageBtnLine}>
-                        {this.state.btnName.map((item, index) => {
-                            return (
-                                <ImageButton
-                                    key={index}
-                                    image={imgBtnImages[index]}
-                                    imgSize={px2dp(35)}
-                                    text={item}
-                                    color="#000"
-                                    btnStyle={styles.imgBtn}
-                                    onPress={this._imageButtonCallback.bind(this, index)}/>
-                            )
-                        })
-                        }
-                    </View>
                     { this._renderListView() }
                 </ScrollView>
             </View>
