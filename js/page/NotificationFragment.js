@@ -60,6 +60,9 @@ export default class NotificationFragment extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <View style={styles.actionBar}>
+                    <Text style={{color: theme.actionBar.fontColor, fontSize: theme.actionBar.fontSize}}>消息</Text>
+                </View>
                 {
                     this.state.dataBlob === 0 ?
                         <Text style={{marginBottom: px2dp(10)}}>并没有什么消息</Text>
@@ -96,5 +99,12 @@ const styles = StyleSheet.create({
     separator: {
         height: 1,
         backgroundColor: '#707070'
+    },
+    actionBar: {
+        height: theme.actionBar.height,
+        backgroundColor: theme.actionBar.backgroundColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: (Platform.OS === 'ios') ? px2dp(20) : 0,
     },
 });

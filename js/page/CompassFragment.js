@@ -50,6 +50,9 @@ export default class CompassFragment extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <View style={styles.actionBar}>
+                    <Text style={{color: theme.actionBar.fontColor, fontSize: theme.actionBar.fontSize}}>成绩</Text>
+                </View>
                 <ScrollView
                     refreshControl={
                         <RefreshControl
@@ -174,5 +177,12 @@ const styles = StyleSheet.create({
     imgBtn: {
         height: px2dp(80),
         width: Dimensions.get('window').width / 3,
-    }
+    },
+    actionBar: {
+        height: theme.actionBar.height,
+        backgroundColor: theme.actionBar.backgroundColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: (Platform.OS === 'ios') ? px2dp(20) : 0,
+    },
 });
