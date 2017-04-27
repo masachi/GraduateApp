@@ -21,7 +21,7 @@ export default class HomeTab extends Component {
         this._onDismissRefresh = this._onDismissRefresh.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this._fetchData();
     }
 

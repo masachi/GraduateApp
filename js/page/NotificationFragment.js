@@ -70,7 +70,7 @@ export default class NotificationFragment extends Component {
                         <View style={{flex: 1}}>
                             <View style={{alignItems: 'center', justifyContent: 'center'}}>
                                 <Text style={{fontSize: 13}}>只显示近期10条消息</Text>
-                            </View>
+                            </View>、
                             <View style={styles.separator}></View>
                             <ListView
                                 renderRow={this._renderRow.bind(this)}
