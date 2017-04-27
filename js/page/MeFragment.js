@@ -11,6 +11,7 @@ import SettingPage from './SettingPage';
 import IndividualPage from './IndividualPage';
 import SignInPage from './SignInAndSignup/SignInPage';
 import CalendarPage from './CalendarFragment';
+import SelfInfo from './SelfInfo';
 
 export default class MeFragment extends Component{
     constructor(props){
@@ -24,7 +25,7 @@ export default class MeFragment extends Component{
        switch(position){
            case 0:  //title
                this.props.navigator.push({
-                   component: IndividualPage
+                   component: SelfInfo
                });
                break;
 
