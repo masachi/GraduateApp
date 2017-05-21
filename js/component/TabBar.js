@@ -37,7 +37,7 @@ export default class TabBar extends Component {
         switch (day) {
             case 0:
                 //this.setState({activeTab: 4});
-                this.state.activeTab = 4;
+                this.state.activeTab = 0;
                 break;
             case 1:
                 // this.setState({activeTab: 0});
@@ -61,7 +61,7 @@ export default class TabBar extends Component {
                 break;
             case 6:
                 // this.setState({activeTab: 4});
-                this.state.activeTab = 4;
+                this.state.activeTab = 0;
                 break;
             default:
                 break;

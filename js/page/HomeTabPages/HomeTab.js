@@ -26,6 +26,7 @@ export default class HomeTab extends Component {
     }
 
     render() {
+        alert(this.props.date);
         return (
             <ScrollView
                 style={{}}

@@ -25,7 +25,7 @@ export default class SelfInfo extends PageComponent {
             <View style={{flex: 1}}>
                 <NavigationBar title="个人详情" backOnPress={this._handleBack.bind(this)}/>
                 <View style={{alignItems: 'center', marginTop: 10, marginBottom: 40}}>
-                    <Image style={{height: 150, width: 150, borderRadius: 50}} source={require('../image/test.jpg')}/>
+                    <Image style={{height: 100, width: 100, borderRadius: 50}} source={require('../image/test.jpg')}/>
                 </View>
                 <View style={styles.separator}></View>
                 <ScrollView>
@@ -65,7 +65,7 @@ export default class SelfInfo extends PageComponent {
 const styles = StyleSheet.create({
     separator: {
         height: 1,
-        backgroundColor: '#707070'
+        backgroundColor: '#c0c0c0'
     },
     row_left: {
         flex: 1,

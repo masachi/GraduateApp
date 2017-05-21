@@ -12,6 +12,7 @@ import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import {AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
 import SignInPage from './SignInAndSignup/SignInPage';
+var moment = require('moment');
 
 export default class HomeFragment extends Component {
     constructor(props) {
@@ -19,9 +20,70 @@ export default class HomeFragment extends Component {
         this.state = {
             tabNames: ['星期一', '星期二', '星期三', '星期四', '星期五'],
             // activeTab: 3,
+            date: [],
         };
         this._handleTabNames = this._handleTabNames.bind(this);
         // this.changeActiveTab = this.changeActiveTab.bind(this);
+        this.getDate = this.getDate.bind(this);
+    }
+
+    getDate() {
+        let tempDate = moment().format("YYYY-MM-DD");
+        //alert(tempDate);
+        let date = [];
+        switch (tempDate.moment.day()){
+            case 0:
+                date[0] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
+                date[1] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
+                date[2] = (tempDate.moment.day() + 3).format("YYYY-MM-DD");
+                date[3] = (tempDate.moment.day() + 4).format("YYYY-MM-DD");
+                date[4] = (tempDate.moment.day() + 5).format("YYYY-MM-DD");
+                break;
+            case 1:
+                date[0] = (tempDate.moment.day()).format("YYYY-MM-DD");
+                date[1] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
+                date[2] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
+                date[3] = (tempDate.moment.day() + 3).format("YYYY-MM-DD");
+                date[4] = (tempDate.moment.day() + 4).format("YYYY-MM-DD");
+                break;
+            case 2:
+                date[0] = (tempDate.moment.day() - 1).format("YYYY-MM-DD");
+                date[1] = (tempDate.moment.day()).format("YYYY-MM-DD");
+                date[2] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
+                date[3] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
+                date[4] = (tempDate.moment.day() + 3).format("YYYY-MM-DD");
+                break;
+            case 3:
+                date[0] = (tempDate.moment.day() - 2).format("YYYY-MM-DD");
+                date[1] = (tempDate.moment.day() - 1).format("YYYY-MM-DD");
+                date[2] = (tempDate.moment.day()).format("YYYY-MM-DD");
+                date[3] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
+                date[4] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
+                break;
+            case 4:
+                date[0] = (tempDate.moment.day() - 3).format("YYYY-MM-DD");
+                date[1] = (tempDate.moment.day() - 2).format("YYYY-MM-DD");
+                date[2] = (tempDate.moment.day() - 1).format("YYYY-MM-DD");
+                date[3] = (tempDate.moment.day()).format("YYYY-MM-DD");
+                date[4] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
+                break;
+            case 5:
+                date[0] = (tempDate.moment.day() - 4).format("YYYY-MM-DD");
+                date[1] = (tempDate.moment.day() - 3).format("YYYY-MM-DD");
+                date[2] = (tempDate.moment.day() - 2).format("YYYY-MM-DD");
+                date[3] = (tempDate.moment.day() - 1).format("YYYY-MM-DD");
+                date[4] = (tempDate.moment.day()).format("YYYY-MM-DD");
+                break;
+            case 6:
+                date[0] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
+                date[1] = (tempDate.moment.day() + 3).format("YYYY-MM-DD");
+                date[2] = (tempDate.moment.day() + 4).format("YYYY-MM-DD");
+                date[3] = (tempDate.moment.day() + 5).format("YYYY-MM-DD");
+                date[4] = (tempDate.moment.day() + 6).format("YYYY-MM-DD");
+                break;
+        }
+
+        this.setState({date: date});
     }
 
     render() {
@@ -41,7 +103,7 @@ export default class HomeFragment extends Component {
                         {
                             this.state.tabNames.map((item, i) => {
                                 return (
-                                    <HomeTab tabLabel={item} key={i} tabTag={item} navigator = {this.props.navigator}/>
+                                    <HomeTab tabLabel={item} key={i} tabTag={item} navigator = {this.props.navigator} date = {this.state.date[i]}/>
                                 );
                             })
                         }
@@ -57,64 +119,15 @@ export default class HomeFragment extends Component {
         });
     }
 
-    initStorage() {
-        var storage = new Storage({
-            size: 2,
-            storageBackend: AsyncStorage,
-            defaultExpires: 1000 * 3600 * 24 * 30,
-            enableCache: true,
-        });
-        global.storage = storage;
-        global.storage.load({
-            key: 'loginState',
-        }).then(ret => {
-                console.log("ret: " + ret);
-                if (!ret.isLoggedIn || ret === null) {
-                    global.storage.save({
-                        key: 'loginState',
-                        rawData: {
-                            username: '',
-                            isLoggedIn: 'false'
-                        }
-                    });
-                }
-            }
-        ).catch(err => {
-            global.storage.save({
-                key: 'loginState',
-                rawData: {
-                    username: '',
-                    isLoggedIn: 'false'
-                }
-            });
-        });
-        storage.load({
-            key: 'loginState',
-        }).then(ret => {
-            console.log(ret.isLoggedIn);
-            if (ret.isLoggedIn === true) {
-                console.log("233333333");
-            }
-            else{
-                ToastAndroid.show("尚未登录",3000);
-                this.props.navigator.push({
-                    component: SignInPage,
-                })
-            }
-        });
-    }
-
     componentDidMount() {
         RCTDeviceEventEmitter.addListener('valueChange', this._handleTabNames);
+        this.getDate();
     }
 
     componentWillUnmount() {
         RCTDeviceEventEmitter.removeListener('value', this._handleTabNames);
     }
 
-    componentWillMount() {
-        this.initStorage();
-    }
 
     _handleTabNames(tabNames) {
         this.setState({tabNames: tabNames});

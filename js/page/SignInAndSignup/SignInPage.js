@@ -20,6 +20,7 @@ import ImageButton from '../../component/ImageButtonWithText';
 import TextDivider from '../../component/TextDivider';
 import px2dp from '../../util/px2dp';
 import TabBar from '../../component/TabBar'
+import {initStorage} from '../../util/storage'
 
 export default class SignInPage extends Component {
     constructor(props) {
@@ -33,27 +34,10 @@ export default class SignInPage extends Component {
 
     _handleBack() {
         const navigator = this.props.navigator;
-        storage.save({
-            key: 'loginState',
-            rawData: {
-                username: this.state.username,
-                isLoggedIn: true,
-            }
-        });
-        storage.load({
-            key: 'loginState'
-        }).then((ret) => {
-            console.log("ret.log" + ret.isLoggedIn);
-            console.log(ret.username);
-        });
-        // AsyncStorage.setItem('loginState','true', (error) => {
-        //     console.log(error);
-        // });
         if (navigator) {
-            // navigator.push({
-            //     component: MainPage,
-            // });
-            navigator.pop();
+            navigator.push({
+                component: MainPage,
+            });
         }
 
     }
@@ -63,7 +47,6 @@ export default class SignInPage extends Component {
             component: SignUpPage
         });
     }
-
     _forgetPassword() {
 
     }

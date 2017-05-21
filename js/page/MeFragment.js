@@ -64,16 +64,7 @@ export default class MeFragment extends Component{
     }
 
     _onSignOut(){
-        storage.save({
-            key: 'loginState',
-            rawData: {
-                username: '',
-                isLoggedIn: false,
-            }
-        });
-        this.props.navigator.push({
-           component: SignInPage,
-        });
+
     }
 
     render(){
