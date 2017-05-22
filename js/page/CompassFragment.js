@@ -96,32 +96,25 @@ export default class CompassFragment extends Component {
     }
 
     _fetchData() {
-        fetch('http://gold.xitu.io/api/v1/hot/57fa525a0e3dd90057c1e04d/android', {timeout: 10000})
+        let body = 'username=' + global.username;
+        fetch('182.254.152.66:10080/api.php?id=score&method=score_list',
+            {
+                timeout: 10000,
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: body
+            })
             .then((response) => response.json())
-            .then((responseData) => {
-                let data = responseData.data;
-                let entry = data.entry;
-                var dataBlob = [];
-
-                for (let i in entry) {
-                    let itemInfo = {
-                        title: entry[i].title,
-                        collectionCount: entry[i].collectionCount,
-                        user: entry[i].user,
-                        time: computeTime(entry[i].createdAtString),
-                        url: entry[i].url,
-                        commentsCount: entry[i].commentsCount,
-                        viewsCount: entry[i].viewsCount,
-                        screenshot: entry[i].screenshot ? entry[i].screenshot : null
-                    }
-                    dataBlob.push(itemInfo);
+            .then((result) => {
+                let data = [];
+                if(result.code === 200){
+                    result.data.forEach((value) => {
+                        data.push(value);
+                    });
+                    this.setState({dataBlob: data});
                 }
-
-                this.setState({
-                    dataBlob: dataBlob,
-                    loadedData: true,
-                    refreshing: false
-                });
             })
             .catch((err) => {
                 this._onDismissRefresh();

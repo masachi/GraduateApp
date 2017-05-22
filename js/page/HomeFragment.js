@@ -24,66 +24,66 @@ export default class HomeFragment extends Component {
         };
         this._handleTabNames = this._handleTabNames.bind(this);
         // this.changeActiveTab = this.changeActiveTab.bind(this);
-        this.getDate = this.getDate.bind(this);
+        this.getDate();
     }
 
     getDate() {
-        let tempDate = moment().format("YYYY-MM-DD");
         //alert(tempDate);
-        let date = [];
-        switch (tempDate.moment.day()){
+        global.date = [];
+        switch (moment().day()){
             case 0:
-                date[0] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
-                date[1] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
-                date[2] = (tempDate.moment.day() + 3).format("YYYY-MM-DD");
-                date[3] = (tempDate.moment.day() + 4).format("YYYY-MM-DD");
-                date[4] = (tempDate.moment.day() + 5).format("YYYY-MM-DD");
+                date[0] = (moment().add(1, 'd')).format("YYYY-MM-DD");
+                date[1] = (moment().add(2, 'd')).format("YYYY-MM-DD");
+                date[2] = (moment().add(3, 'd')).format("YYYY-MM-DD");
+                date[3] = (moment().add(4, 'd')).format("YYYY-MM-DD");
+                date[4] = (moment().add(5, 'd')).format("YYYY-MM-DD");
                 break;
             case 1:
-                date[0] = (tempDate.moment.day()).format("YYYY-MM-DD");
-                date[1] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
-                date[2] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
-                date[3] = (tempDate.moment.day() + 3).format("YYYY-MM-DD");
-                date[4] = (tempDate.moment.day() + 4).format("YYYY-MM-DD");
+                date[0] = (moment()).format("YYYY-MM-DD");
+                date[1] = (moment().add(1, 'd')).format("YYYY-MM-DD");
+                date[2] = (moment().add(2, 'd')).format("YYYY-MM-DD");
+                date[3] = (moment().add(3, 'd')).format("YYYY-MM-DD");
+                date[4] = (moment().add(4, 'd')).format("YYYY-MM-DD");
                 break;
             case 2:
-                date[0] = (tempDate.moment.day() - 1).format("YYYY-MM-DD");
-                date[1] = (tempDate.moment.day()).format("YYYY-MM-DD");
-                date[2] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
-                date[3] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
-                date[4] = (tempDate.moment.day() + 3).format("YYYY-MM-DD");
+                date[0] = (moment().subtract(1, 'd')).format("YYYY-MM-DD");
+                date[1] = (moment()).format("YYYY-MM-DD");
+                date[2] = (moment().add(1, 'd')).format("YYYY-MM-DD");
+                date[3] = (moment().add(2, 'd')).format("YYYY-MM-DD");
+                date[4] = (moment().add(3, 'd')).format("YYYY-MM-DD");
                 break;
             case 3:
-                date[0] = (tempDate.moment.day() - 2).format("YYYY-MM-DD");
-                date[1] = (tempDate.moment.day() - 1).format("YYYY-MM-DD");
-                date[2] = (tempDate.moment.day()).format("YYYY-MM-DD");
-                date[3] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
-                date[4] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
+                date[0] = (moment().subtract(2, 'd')).format("YYYY-MM-DD");
+                date[1] = (moment().subtract(1, 'd')).format("YYYY-MM-DD");
+                date[2] = (moment()).format("YYYY-MM-DD");
+                date[3] = (moment().add(1, 'd')).format("YYYY-MM-DD");
+                date[4] = (moment().add(2, 'd')).format("YYYY-MM-DD");
                 break;
             case 4:
-                date[0] = (tempDate.moment.day() - 3).format("YYYY-MM-DD");
-                date[1] = (tempDate.moment.day() - 2).format("YYYY-MM-DD");
-                date[2] = (tempDate.moment.day() - 1).format("YYYY-MM-DD");
-                date[3] = (tempDate.moment.day()).format("YYYY-MM-DD");
-                date[4] = (tempDate.moment.day() + 1).format("YYYY-MM-DD");
+                date[0] = (moment().subtract(3, 'd')).format("YYYY-MM-DD");
+                date[1] = (moment().subtract(2, 'd')).format("YYYY-MM-DD");
+                date[2] = (moment().subtract(1, 'd')).format("YYYY-MM-DD");
+                date[3] = (moment()).format("YYYY-MM-DD");
+                date[4] = (moment().add(1, 'd')).format("YYYY-MM-DD");
                 break;
             case 5:
-                date[0] = (tempDate.moment.day() - 4).format("YYYY-MM-DD");
-                date[1] = (tempDate.moment.day() - 3).format("YYYY-MM-DD");
-                date[2] = (tempDate.moment.day() - 2).format("YYYY-MM-DD");
-                date[3] = (tempDate.moment.day() - 1).format("YYYY-MM-DD");
-                date[4] = (tempDate.moment.day()).format("YYYY-MM-DD");
+                date[0] = (moment().subtract(4, 'd')).format("YYYY-MM-DD");
+                date[1] = (moment().subtract(3, 'd')).format("YYYY-MM-DD");
+                date[2] = (moment().subtract(2, 'd')).format("YYYY-MM-DD");
+                date[3] = (moment().subtract(1, 'd')).format("YYYY-MM-DD");
+                date[4] = (moment()).format("YYYY-MM-DD");
                 break;
             case 6:
-                date[0] = (tempDate.moment.day() + 2).format("YYYY-MM-DD");
-                date[1] = (tempDate.moment.day() + 3).format("YYYY-MM-DD");
-                date[2] = (tempDate.moment.day() + 4).format("YYYY-MM-DD");
-                date[3] = (tempDate.moment.day() + 5).format("YYYY-MM-DD");
-                date[4] = (tempDate.moment.day() + 6).format("YYYY-MM-DD");
+                date[0] = (moment().add(2, 'd')).format("YYYY-MM-DD");
+                date[1] = (moment().add(3, 'd')).format("YYYY-MM-DD");
+                date[2] = (moment().add(4, 'd')).format("YYYY-MM-DD");
+                date[3] = (moment().add(5, 'd')).format("YYYY-MM-DD");
+                date[4] = (moment().add(6, 'd')).format("YYYY-MM-DD");
                 break;
         }
+        //alert((moment().add(2, 'd')).format("YYYY-MM-DD"))
 
-        this.setState({date: date});
+        //alert(date[0]  + " " + date[1]  + " " + date[2]  + " " + date[3]  + " " + date[4]);
     }
 
     render() {
@@ -103,7 +103,7 @@ export default class HomeFragment extends Component {
                         {
                             this.state.tabNames.map((item, i) => {
                                 return (
-                                    <HomeTab tabLabel={item} key={i} tabTag={item} navigator = {this.props.navigator} date = {this.state.date[i]}/>
+                                    <HomeTab tabLabel={item} key={i} tabTag={item} navigator = {this.props.navigator} date = {global.date[i]} />
                                 );
                             })
                         }
@@ -121,7 +121,6 @@ export default class HomeFragment extends Component {
 
     componentDidMount() {
         RCTDeviceEventEmitter.addListener('valueChange', this._handleTabNames);
-        this.getDate();
     }
 
     componentWillUnmount() {

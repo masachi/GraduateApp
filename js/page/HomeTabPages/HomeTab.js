@@ -21,12 +21,12 @@ export default class HomeTab extends Component {
         this._onDismissRefresh = this._onDismissRefresh.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._fetchData();
     }
 
     render() {
-        alert(this.props.date);
+        //alert(this.props.date);
         return (
             <ScrollView
                 style={{}}
@@ -82,41 +82,31 @@ export default class HomeTab extends Component {
     }
 
     _fetchData() {
-        var url = 'http://gold.xitu.io/api/v1/timeline/57fa525a0e3dd90057c1e04d/' + this._getCurrentTime();
-        fetch(url, {timeout: 10000})
-            .then((response) => response.json())
-            .then((responseData) => {
-                let data = responseData.data;
-                var dataBlob = [];
-
-                for (let i in data) {
-                    let info = {
-                        tags: data[i].tagsTitleArray,
-                        category: data[i].category,
-                        content: data[i].content,
-                        collectionCount: data[i].collectionCount,
-                        title: data[i].title,
-                        user: data[i].user,
-                        url: data[i].url,
-                        time: computeTime(data[i].createdAtString),
-                        commentsCount: data[i].commentsCount,
-                        viewsCount: data[i].viewsCount,
-                        screenshot: data[i].screenshot ? data[i].screenshot : null
-                    }
-                    dataBlob.push(info);
-                }
-
-                if (dataBlob.length !== 0) {
-                    this.setState({
-                        dataBlob: dataBlob,
-                        loadedData: true,
-                        refreshing: false
+        let data = [];
+        let body = 'username=' + global.username + '&' + 'date=' + this.props.date;
+        var url = 'http://182.254.152.66:10080/api.php?id=course&method=course_list';
+        //alert(body);
+        fetch(url, {
+            timeout: 10000,
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: body
+        }).then((response) => response.json())
+            .then((result) => {
+                //alert(result);
+                if (result.code === 200) {
+                    result.data.forEach((value) => {
+                        data.push(value);
                     });
+                    this.setState({dataBlob: data});
                 }
             })
             .catch((err) => {
                 this._onDismissRefresh();
-                ToastAndroid.show('网络错误',30000);
+                ToastAndroid.show('网络错误', 30000);
             });
     }
 }

@@ -17,13 +17,13 @@ export default class NotificationFragment extends Component {
         // 初始状态
         this.state = {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
-            dataBlob: 4,
+            dataBlob: [],
         };
     }
 
     componentDidMount() {
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows([1, 2, 3, 4]),
+            dataSource: this.state.dataSource.cloneWithRows(),
         });
     }
 
@@ -64,7 +64,7 @@ export default class NotificationFragment extends Component {
                     <Text style={{color: theme.actionBar.fontColor, fontSize: theme.actionBar.fontSize}}>消息</Text>
                 </View>
                 {
-                    this.state.dataBlob === 0 ?
+                    this.state.dataBlob.length === 0 ?
                         <Text style={{marginBottom: px2dp(10)}}>并没有什么消息</Text>
                         :
                         <View style={{flex: 1}}>
@@ -75,6 +75,7 @@ export default class NotificationFragment extends Component {
                             <ListView
                                 renderRow={this._renderRow.bind(this)}
                                 dataSource={this.state.dataSource}
+                                onPress={this._onItemClick.bind(this, url)}
                             />
                         </View>
 

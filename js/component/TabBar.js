@@ -10,6 +10,7 @@ import MeFragment from '../page/MeFragment';
 import CalendarFragment from '../page/CalendarFragment';
 import NotifyFragment from '../page/NotificationFragment';
 import px2dp from '../util/px2dp';
+var moment = require('moment');
 
 
 export default class TabBar extends Component {
@@ -24,8 +25,10 @@ export default class TabBar extends Component {
             selectedTab: 'home',
             tabName: ['首页', '成绩', '日历', '消息', '我'],
             activeTab: 4,
+            date: []
         };
         this.changeActiveTab();
+        this.getDate();
     }
 
     changeActiveTab() {
@@ -84,7 +87,7 @@ export default class TabBar extends Component {
                     renderIcon={() => <Image style={styles.tab} source={this.state.homeNormal}/>}
                     renderSelectedIcon={() => <Image style={styles.tab} source={this.state.homeSelected}/>}
                     onPress={() => this.setState({selectedTab: 'home'})}>
-                    {<HomeFragment navigator={this.props.navigator} activeTab = {this.state.activeTab}/>}
+                    {<HomeFragment navigator={this.props.navigator} activeTab = {this.state.activeTab} />}
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     tabStyle={styles.tabStyle}

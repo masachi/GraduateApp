@@ -27,12 +27,13 @@ export default class SignInPage extends Component {
         super(props);
         this.handleBack = this._handleBack.bind(this);
         this.state = {
-            username: '',
+            username: '1304010330',
             password: '',
         }
     }
 
     _handleBack() {
+        global.username = this.state.username;
         const navigator = this.props.navigator;
         if (navigator) {
             navigator.push({

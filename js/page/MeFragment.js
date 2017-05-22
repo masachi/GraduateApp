@@ -17,15 +17,46 @@ export default class MeFragment extends Component{
     constructor(props){
         super(props);
         this.state = {
-
+            username: '',
+            data: new Object()
         };
+        this._fetchData = this._fetchData.bind(this);
+    }
+
+
+    componentDidMount() {
+        this._fetchData();
+    }
+
+    _fetchData(){
+        var url = '182.254.152.66:10080/api.php?id=user&method=profile';
+        let body = 'username=' + global.username;
+        fetch(url, {
+            timeout: 10000,
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: body
+        }).then((response) => response.json())
+            .then((result) => {
+                //alert(result);
+                if (result.code === 200) {
+                    this.setState({data: result.data});
+                    this.setState({username: result.data[0].name})
+                }
+            })
     }
 
     _onPressCallback(position){
        switch(position){
            case 0:  //title
                this.props.navigator.push({
-                   component: SelfInfo
+                   component: SelfInfo,
+                   params:{
+                       data: this.state.data,
+                   }
                });
                break;
 
@@ -76,9 +107,9 @@ export default class MeFragment extends Component{
                 {Platform.OS === 'android' ?
                     <TouchableNativeFeedback onPress={this._onPressCallback.bind(this, 0)}>
                         <View style={styles.intro}>
-                            <Avatar image={require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)}/>
+                            <Avatar image={require('../image/profile_default.png')} size={px2dp(55)} textSize={px2dp(20)}/>
                             <View style={{marginLeft: px2dp(12)}}>
-                                <Text style={{color: theme.text.color, fontSize: px2dp(20)}}>React_Native</Text>
+                                <Text style={{color: theme.text.color, fontSize: px2dp(20)}}>{this.state.username}</Text>
                             </View>
                             <View style={{flex: 1, flexDirection:'row', justifyContent: 'flex-end'}}>
                                 <Icon name="ios-arrow-forward" color="#ccc" size={px2dp(30)}/>
@@ -90,7 +121,7 @@ export default class MeFragment extends Component{
                         <View style={styles.intro}>
                             <Avatar image={require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)}/>
                             <View style={{marginLeft: px2dp(12)}}>
-                                <Text style={{color: theme.text.color, fontSize: px2dp(20)}}>WangdiCoder</Text>
+                                <Text style={{color: theme.text.color, fontSize: px2dp(20)}}>{this.state.username}</Text>
                             </View>
                             <View style={{flex: 1, flexDirection:'row', justifyContent: 'flex-end'}}>
                                 <Icon name="ios-arrow-forward" color="#ccc" size={px2dp(30)}/>

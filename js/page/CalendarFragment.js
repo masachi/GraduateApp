@@ -5,7 +5,8 @@ import React, {Component} from 'react';
 import{
     View,
     Dimensions,
-    ListView
+    ListView,
+    Text
 } from 'react-native';
 
 import PageComponent from './BackPageComponent';
@@ -40,6 +41,22 @@ export default class CalendarFragment extends PageComponent {
         this.getCurrentDay();
     }
 
+    _renderRow(){
+        return (
+            <View>
+                <Text>
+
+                </Text>
+                <Text>
+
+                </Text>
+                <Text>
+
+                </Text>
+            </View>
+        );
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -58,7 +75,9 @@ export default class CalendarFragment extends PageComponent {
 
                     }}
                 />
-                <ListView />
+                <ListView
+                    renderRow={}
+                />
             </View>
         );
     }
