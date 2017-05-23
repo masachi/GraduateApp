@@ -29,7 +29,7 @@ export default class MeFragment extends Component{
     }
 
     _fetchData(){
-        var url = '182.254.152.66:10080/api.php?id=user&method=profile';
+        var url = 'http://182.254.152.66:10080/api.php?id=user&method=profile';
         let body = 'username=' + global.username;
         fetch(url, {
             timeout: 10000,
@@ -43,7 +43,7 @@ export default class MeFragment extends Component{
             .then((result) => {
                 //alert(result);
                 if (result.code === 200) {
-                    this.setState({data: result.data});
+                    this.setState({data: result.data[0]});
                     this.setState({username: result.data[0].name})
                 }
             })
@@ -90,6 +90,7 @@ export default class MeFragment extends Component{
                this.props.navigator.push({
                    component: CalendarPage
                });
+               break;
            }
        }
     }

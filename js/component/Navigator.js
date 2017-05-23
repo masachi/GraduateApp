@@ -40,7 +40,7 @@ export default class MyNavigator extends Component {
             <Navigator
                 initialRoute={this.renderFirstView()}
                 renderScene={(route, navigator) => {
-                    return <route.component navigator={navigator} {...route.args}/>
+                    return <route.component navigator={navigator} {...route.params}/>
                 }}
             />
         );

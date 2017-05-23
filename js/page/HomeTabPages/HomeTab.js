@@ -102,6 +102,7 @@ export default class HomeTab extends Component {
                         data.push(value);
                     });
                     this.setState({dataBlob: data});
+                    this._onDismissRefresh();
                 }
             })
             .catch((err) => {

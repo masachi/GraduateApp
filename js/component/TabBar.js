@@ -28,7 +28,6 @@ export default class TabBar extends Component {
             date: []
         };
         this.changeActiveTab();
-        this.getDate();
     }
 
     changeActiveTab() {

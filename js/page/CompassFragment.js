@@ -13,7 +13,8 @@ import {
     Dimensions,
     PixelRatio,
     Alert,
-    AlertIOS
+    AlertIOS,
+    ListView
 } from 'react-native';
 import Toast from '@remobile/react-native-toast';
 import px2dp from '../util/px2dp';
@@ -22,7 +23,7 @@ import computeTime from '../util/computeTime';
 import SearchBar from '../component/SearchBar';
 import Swiper from 'react-native-swiper';
 import ImageButton from '../component/ImageButtonWithText';
-import ListView from '../component/SimpleListView';
+//import ListView from '../component/SimpleListView';
 
 const bannerImages = [
     require('../image/banner1.jpg'),
@@ -42,9 +43,11 @@ export default class CompassFragment extends Component {
             refreshing: true,
             loadedData: false,
             dataBlob: [],
+            dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
         }
         this._fetchData = this._fetchData.bind(this);
         this._onDismissRefresh = this._onDismissRefresh.bind(this);
+        this._renderRow = this._renderRow.bind(this);
     }
 
     render() {
@@ -79,7 +82,7 @@ export default class CompassFragment extends Component {
 
     }
 
-    _onDismissRefresh(){
+    _onDismissRefresh() {
         this.setState({refreshing: false});
     }
 
@@ -87,18 +90,67 @@ export default class CompassFragment extends Component {
         this._alert();
     }
 
+    _renderHeader() {
+        return (
+            <View style={styles.header}>
+                <Text>成绩</Text>
+            </View>
+        );
+    }
+
+    _renderRow(rowData) {
+        return (
+            <View style={{paddingHorizontal: 5, flex: 1, backgroundColor: '#fff', flexDirection: 'row'}}>
+                <View style={{flexDirection: 'column', paddingLeft: 20, paddingTop: 10, paddingBottom: 10}}>
+                    <Text style={[styles.year, {justifyContent: 'flex-start'}]}>
+                        {rowData.year}
+                    </Text>
+                    <Text style={[styles.year, {justifyContent: 'flex-start', paddingTop: 10}]}>
+                        {rowData.term}
+                    </Text>
+                </View>
+                <View style={{flex: 1,flexDirection: 'column', paddingTop: 10, paddingBottom: 10, alignItems: 'flex-end', paddingHorizontal: 20}}>
+                    <View style={{flexDirection: 'row', paddingLeft: 20, alignItems: 'flex-end'}}>
+                        <Text style={[styles.year, {textAlign: 'right', justifyContent: 'flex-end'}]}>
+                            {rowData.course}
+                        </Text>
+                        <Text style={[styles.year, {textAlign: 'right', justifyContent: 'flex-end', paddingLeft: 20}]}>
+                            {rowData.score}
+                        </Text>
+                    </View>
+                    <View style={{flexDirection: 'row', justifyContent: 'flex-end', paddingLeft: 40, paddingTop: 10}}>
+                        <Text style={[styles.type, {textAlign: 'right', justifyContent: 'flex-end'}]}>
+                            {rowData.type}
+                        </Text>
+                        <Text style={[styles.type, {textAlign: 'right', justifyContent: 'flex-end', paddingLeft: 10}]}>
+                            {rowData.flag}
+                        </Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
     _renderListView() {
         if (!this.state.refreshing || this.state.loadedData) {
             return (
-                <ListView isRenderHeader={true} contents={this.state.dataBlob}/>
+                <ListView
+                    style={{flex: 1}}
+                    renderRow={this._renderRow}
+                    dataSource={this.state.dataSource}
+                    renderHeader={this._renderHeader.bind(this)}
+                    renderSeparator={() => <View style={{height: 10}}></View>}
+                    renderFooter={() => <View style={{height: 40}}/>}
+                />
             );
         }
     }
 
     _fetchData() {
         let body = 'username=' + global.username;
-        fetch('182.254.152.66:10080/api.php?id=score&method=score_list',
+        fetch('http://182.254.152.66:10080/api.php?id=score&method=score_list',
             {
+                method: 'POST',
                 timeout: 10000,
                 mode: 'cors',
                 headers: {
@@ -109,22 +161,26 @@ export default class CompassFragment extends Component {
             .then((response) => response.json())
             .then((result) => {
                 let data = [];
-                if(result.code === 200){
+                if (result.code === 200) {
                     result.data.forEach((value) => {
                         data.push(value);
                     });
+                    this._onDismissRefresh();
                     this.setState({dataBlob: data});
+                    this.setState({dataSource: this.state.dataSource.cloneWithRows(this.state.dataBlob)})
                 }
             })
             .catch((err) => {
                 this._onDismissRefresh();
-                ToastAndroid.show('网络错误',30000);
+                //ToastAndroid.show(err.toString());
+                ToastAndroid.show('网络错误', 30000);
             });
 
     }
 
     componentDidMount() {
         this._fetchData();
+        //this.setState({dataSource: this.state.dataSource.cloneWithRows([1,2,3,4])})
     }
 
     _alert() {
@@ -177,5 +233,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: (Platform.OS === 'ios') ? px2dp(20) : 0,
+    },
+    year: {
+        fontSize: 16,
+        color: 'black'
+    },
+    type: {
+        fontSize: 14,
+        color: 'grey'
+    },
+    header: {
+        backgroundColor: '#fff',
+        height: px2dp(40),
+        paddingHorizontal: 15,
+        justifyContent: 'center',
+        paddingBottom: 10
     },
 });

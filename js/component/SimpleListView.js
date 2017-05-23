@@ -26,7 +26,7 @@ export default class SimpleListView extends Component{
     }
 
     _itemClickCallback(rowData){
-        MainPage.switchToWebViewPage(rowData);
+
     }
 
     _renderItem(rowData, sectionID, rowID, highlightRow){
@@ -55,11 +55,7 @@ export default class SimpleListView extends Component{
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
                     alignItems: 'center'}}>
-                    {rowData.screenshot ?
-                        <Image source={{uri: rowData.screenshot.url}}
-                               style={styles.image}/>
-                        :
-                        <Image source={require('../image/user_article_no_data.png')}
+                        <Image source={require('../image/session_default.png')}
                                style={styles.image}/>
                     }
                 </View>
