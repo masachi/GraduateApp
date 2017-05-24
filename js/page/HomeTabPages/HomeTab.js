@@ -66,7 +66,7 @@ export default class HomeTab extends Component {
     }
 
     _onDismissRefresh() {
-        Toast.showLongCenter.bind(null, '网络错误');
+        //Toast.showLongCenter.bind(null, '网络错误');
         this.setState({refreshing: false});
     }
 

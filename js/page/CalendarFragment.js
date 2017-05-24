@@ -7,7 +7,8 @@ import{
     Dimensions,
     ListView,
     Text,
-    ToastAndroid
+    ToastAndroid,
+    StyleSheet
 } from 'react-native';
 
 import PageComponent from './BackPageComponent';
@@ -49,10 +50,17 @@ export default class CalendarFragment extends PageComponent {
         //this.setState({dataSource: this.state.dataSource.cloneWithRows([1,2,3,4])});
     }
 
-    _renderRow(){
+    _renderRow(rowData){
         return (
-            <View>
-
+            <View style={{flex: 1,flexDirection: 'row', paddingHorizontal: 20}}>
+                <View>
+                    <Text></Text>
+                    <Text></Text>
+                </View>
+                <View>
+                    <Text></Text>
+                    <Text></Text>
+                </View>
             </View>
         );
     }
@@ -84,7 +92,7 @@ export default class CalendarFragment extends PageComponent {
                         data.push(value);
                     });
                     this.setState({dataBlob: data});
-                    this.setState({dataSource: this.state.dataSource.cloneWithRows(this.state.dataBlob)})
+                    ///this.setState({dataSource: this.state.dataSource.cloneWithRows(this.state.dataBlob)})
                 }
             })
             .catch((err) => {
@@ -118,5 +126,26 @@ export default class CalendarFragment extends PageComponent {
         );
     }
 
-
 }
+const styles = StyleSheet.create({
+    course: {
+        fontSize: 16,
+        color: 'black'
+    },
+    time: {
+        fontSize: 16,
+        color: 'red'
+    },
+    date: {
+        fontSize: 16,
+        color: 'grey'
+    },
+    location: {
+        fontSize: 14,
+        color: 'grey'
+    },
+    type: {
+        fontSize: 16,
+        color: 'grey'
+    }
+});

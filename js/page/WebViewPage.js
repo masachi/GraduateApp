@@ -15,26 +15,17 @@ export default class WebViewPage extends PageComponent{
     }
 
     render(){
-        const data = this.props.rowData;
+        //alert(this.props.url);
         return(
             <View style={{flex: 1}}>
                 <NavigationBar title={'详情'} onPress={this._handleBack.bind(this)}/>
                 <WebView
-                    source={{uri: data.url}}
+                    source={{uri: this.props.url}}
                     style={styles.webView}
                     renderLoading={this._renderLoading.bind(this)}
                     startInLoadingState={true}
-                    onLoad={this._showTips.bind(this, 'load')}
-                    onError={this._showTips.bind(this, 'error')}
+                    scalesPageToFit={true}
                 />
-                {/*<View style={styles.bottom}>*/}
-                    {/*<Icon name="favorite-border" color='#58c900' size={px2dp(22)}/>*/}
-                    {/*<Icon name="chat-bubble-outline" size={px2dp(22)} color={theme.grayColor} style={{marginLeft: px2dp(17)}}/>*/}
-                    {/*<Icon name="share" size={px2dp(22)} color={theme.grayColor} style={{marginLeft: px2dp(17)}}/>*/}
-                    {/*<View style={styles.info}>*/}
-                        {/*<Text style={{fontSize: 13}}>阅读 {data.viewsCount} • 收藏 {data.collectionCount} • 评论 {data.commentsCount}</Text>*/}
-                    {/*</View>*/}
-                {/*</View>*/}
             </View>
         );
     }
