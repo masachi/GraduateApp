@@ -35,9 +35,11 @@ export default class SignInPage extends Component {
     }
 
     _handleBack() {
+        this._passInput.blur();
+        this._userInput.blur();
         if(this.state.password !== '' && this.state.username !== '') {
             var url = 'http://182.254.152.66:18080/graduate/login';
-            let body = 'username=' + global.username + 'password=' + this.state.password;
+            let body = 'username=' + this.state.username + '&' + 'password=' + this.state.password;
             fetch(url, {
                 timeout: 10000,
                 method: 'POST',
@@ -51,7 +53,7 @@ export default class SignInPage extends Component {
                     //alert(result);
                     if (result.code === 200) {
                         Toast.show('登录成功', {
-                            duration: Toast.durations.LONG,
+                            duration: 3000,
                             position: Toast.positions.BOTTOM,
                             shadow: true,
                             animation: true,
@@ -67,14 +69,26 @@ export default class SignInPage extends Component {
                         }
                     }
                     else {
-                        Toast.show(result.message, {
-                            duration: Toast.durations.LONG,
-                            position: Toast.positions.BOTTOM,
-                            shadow: true,
-                            animation: true,
-                            hideOnPress: true,
-                            delay: 0,
-                        });
+                        if(result.message === null){
+                            Toast.show('Server Error', {
+                                duration: 3000,
+                                position: Toast.positions.BOTTOM,
+                                shadow: true,
+                                animation: true,
+                                hideOnPress: true,
+                                delay: 0,
+                            });
+                        }
+                        else {
+                            Toast.show(result.message, {
+                                duration: 3000,
+                                position: Toast.positions.BOTTOM,
+                                shadow: true,
+                                animation: true,
+                                hideOnPress: true,
+                                delay: 0,
+                            });
+                        }
                     }
                 });
         }
@@ -112,6 +126,7 @@ export default class SignInPage extends Component {
                 <View style={styles.editGroup}>
                     <View style={styles.editView1}>
                         <TextInput
+                            ref={(text) => this._userInput = text}
                             style={styles.edit}
                             underlineColorAndroid="transparent"
                             placeholder="学号"
@@ -122,10 +137,12 @@ export default class SignInPage extends Component {
                     <View style={{height: 1 / PixelRatio.get(), backgroundColor: '#c4c4c4'}}/>
                     <View style={styles.editView2}>
                         <TextInput
+                            ref={(text) => this._passInput = text}
                             style={styles.edit}
                             underlineColorAndroid="transparent"
                             placeholder="密码"
                             placeholderTextColor="#c4c4c4"
+                            secureTextEntry={true}
                             onChangeText={(text) => this.setState({password: text})}
                             defaultValue={this.state.password}/>
                     </View>

@@ -96,7 +96,7 @@ export default class MeFragment extends Component{
     }
 
     _onSignOut(){
-
+        this.props.navigator.pop();
     }
 
     render(){

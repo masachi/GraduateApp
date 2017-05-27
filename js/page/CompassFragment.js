@@ -16,7 +16,6 @@ import {
     AlertIOS,
     ListView
 } from 'react-native';
-import Toast from '@remobile/react-native-toast';
 import px2dp from '../util/px2dp';
 import theme from '../config/theme';
 import computeTime from '../util/computeTime';
