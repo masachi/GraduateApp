@@ -9,7 +9,8 @@ import {
     Image,
     TextInput,
     BackAndroid,
-    AsyncStorage
+    AsyncStorage,
+    ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MainPage from '../MainPage';
@@ -21,6 +22,7 @@ import TextDivider from '../../component/TextDivider';
 import px2dp from '../../util/px2dp';
 import TabBar from '../../component/TabBar'
 import {initStorage} from '../../util/storage'
+import Toast from 'react-native-root-toast';
 
 export default class SignInPage extends Component {
     constructor(props) {
@@ -33,11 +35,57 @@ export default class SignInPage extends Component {
     }
 
     _handleBack() {
-        global.username = this.state.username;
-        const navigator = this.props.navigator;
-        if (navigator) {
-            navigator.push({
-                component: MainPage,
+        if(this.state.password !== '' && this.state.username !== '') {
+            var url = 'http://182.254.152.66:18080/graduate/login';
+            let body = 'username=' + global.username + 'password=' + this.state.password;
+            fetch(url, {
+                timeout: 10000,
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: body
+            }).then((response) => response.json())
+                .then((result) => {
+                    //alert(result);
+                    if (result.code === 200) {
+                        Toast.show('登录成功', {
+                            duration: Toast.durations.LONG,
+                            position: Toast.positions.BOTTOM,
+                            shadow: true,
+                            animation: true,
+                            hideOnPress: true,
+                            delay: 0,
+                        });
+                        global.username = this.state.username;
+                        const navigator = this.props.navigator;
+                        if (navigator) {
+                            navigator.push({
+                                component: MainPage,
+                            });
+                        }
+                    }
+                    else {
+                        Toast.show(result.message, {
+                            duration: Toast.durations.LONG,
+                            position: Toast.positions.BOTTOM,
+                            shadow: true,
+                            animation: true,
+                            hideOnPress: true,
+                            delay: 0,
+                        });
+                    }
+                });
+        }
+        else{
+            Toast.show('用户名或者密码未填写', {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
             });
         }
 

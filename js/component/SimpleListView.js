@@ -22,6 +22,7 @@ export default class SimpleListView extends Component{
         });
         this.state = {
             dataSource: ds.cloneWithRows(this.props.contents)
+            //dataSource: ds.cloneWithRows([1,2,3,4])
         }
     }
 
@@ -48,22 +49,28 @@ export default class SimpleListView extends Component{
     }
 
     _renderItemContent(rowData){
+        //alert(2333);
         return(
             <View style={styles.item}>
                 <View style={{
-                    flex: 20,
+                    flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
+                    paddingLeft: 10,
+                    paddingVertical: 20,
                     alignItems: 'center'}}>
-                        <Image source={require('../image/session_default.png')}
-                               style={styles.image}/>
-                    }
+                    <Image source={require('../image/session_default.png')}
+                           style={styles.image}/>
                 </View>
-                <View style={{flex: 80, marginTop: px2dp(10)}}>
-                    <Text style={styles.content} numberOfLines={2}>{rowData.title}</Text>
-                    <View style={styles.infoBar}>
-                        <Text style={styles.infoBarText} numberOfLines={1}>{rowData.collectionCount}人收藏
-                            • {rowData.user.username} • {rowData.time}</Text>
+                <View style={{flex: 1, paddingLeft: 20, paddingRight: 10, paddingVertical: 20}}>
+                    <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end'}}>
+                        <Text style={{fontSize: 16, color: 'black', textAlign: 'right'}}>{rowData.course}</Text>
+                        <Text style={{fontSize: 16, color: 'black', paddingLeft: 30, textAlign: 'right'}}>{rowData.teacher}</Text>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <Text style={{fontSize: 14, color: 'grey', textAlign: 'right'}}>{rowData.time}</Text>
+                        <Text style={{fontSize: 14, color: 'grey', textAlign: 'right', paddingLeft: 10}}>{rowData.num}</Text>
+                        <Text style={{fontSize: 14, color: 'grey', textAlign: 'right', paddingLeft: 10}}>{rowData.location}</Text>
                     </View>
                 </View>
             </View>
@@ -88,6 +95,7 @@ export default class SimpleListView extends Component{
                 dataSource={this.state.dataSource}
                 renderRow={this._renderItem.bind(this)}
                 renderHeader={this._renderHeader.bind(this)}
+                renderSeparator={() => <View style={{height: 20}}/>}
             />
         );
     }
@@ -104,14 +112,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     item: {
+        flex: 1,
         flexDirection: 'row',
-        width: theme.screenWidth,
         height: px2dp(80),
         backgroundColor: '#fff',
-        paddingLeft: px2dp(15),
-        paddingRight: px2dp(17),
-        borderTopColor: '#d4d4d4',
-        borderTopWidth: 1 / PixelRatio.get()
+        marginHorizontal: 15,
+        borderColor: '#c0c0c0',
+        borderRadius: 8
     },
     content: {
         color: '#000',

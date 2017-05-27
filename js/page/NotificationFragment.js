@@ -20,6 +20,7 @@ import px2dp from '../util/px2dp';
 import NotificationInfo from './NotificationInfo';
 import WebViewPage from './WebViewPage';
 import PageComponent from './BackPageComponent';
+import Toast from 'react-native-root-toast';
 
 export default class NotificationFragment extends PageComponent {
     // 构造
@@ -80,7 +81,14 @@ export default class NotificationFragment extends PageComponent {
             })
             .catch((err) => {
                 this._onDismissRefresh();
-                ToastAndroid.show('网络错误', 30000);
+                Toast.show('网络错误', {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                });
             });
     }
 

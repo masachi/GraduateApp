@@ -12,6 +12,7 @@
     "react": "15.3.2",
     "react-native": "^0.36.0",
     "react-native-calendar-picker": "^4.0.0",
+    "react-native-root-toast": "^1.1.2",
     "react-native-scrollable-tab-view": "^0.6.3",
     "react-native-simple-store": "^1.1.0",
     "react-native-storage": "^0.1.5",

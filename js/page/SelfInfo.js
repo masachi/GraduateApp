@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import PageComponent from './BackPageComponent';
 import NavigationBar from '../component/SimpleNavigationBar';
+import theme from '../config/theme';
 
 export default class SelfInfo extends PageComponent {
     // 构造
@@ -59,12 +60,12 @@ export default class SelfInfo extends PageComponent {
 
     render() {
         return (
-            <View style={{flex: 1}}>
+            <View style={{backgroundColor: theme.themeColor, flex: 1}   }>
                 <NavigationBar title="个人详情" backOnPress={this._handleBack.bind(this)}/>
                 <View style={{alignItems: 'center', marginTop: 10, marginBottom: 40}}>
                     <Image style={{height: 100, width: 100, borderRadius: 50}} source={require('../image/test.jpg')}/>
                 </View>
-                <View style={[styles.separator, {paddingHorizontal: 10}]}></View>
+                <View style={[styles.separator, {paddingHorizontal: 10}]} />
                 <ScrollView style={{paddingHorizontal: 10}}>
                     <View style={{flex: 1, flexDirection: 'column'}}>
                         <View style={{
@@ -72,7 +73,9 @@ export default class SelfInfo extends PageComponent {
                             flexDirection: 'row',
                             paddingTop: 10,
                             paddingBottom: 10,
-                            alignItems: 'center'
+                            borderRadius: 8,
+                            borderColor: '#c0c0c0',
+                            backgroundColor: '#fff'
                         }}>
                             <Text style={[{fontSize: 16, color: 'black',}, styles.row_left]}>学号</Text>
                             <Text style={[{fontSize: 16, color: 'black',}, styles.row_right]}>{this.state.number}</Text>
@@ -83,7 +86,10 @@ export default class SelfInfo extends PageComponent {
                             flexDirection: 'row',
                             paddingTop: 10,
                             paddingBottom: 10,
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            borderRadius: 8,
+                            borderColor: '#c0c0c0',
+                            backgroundColor: '#fff'
                         }}>
                             <Text style={[{fontSize: 16, color: 'black',}, styles.row_left]}>姓名</Text>
                             <Text style={[{fontSize: 16, color: 'black',}, styles.row_right]}>{this.state.name}</Text>
@@ -94,7 +100,10 @@ export default class SelfInfo extends PageComponent {
                             flexDirection: 'row',
                             paddingTop: 10,
                             paddingBottom: 10,
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            borderRadius: 8,
+                            borderColor: '#c0c0c0',
+                            backgroundColor: '#fff'
                         }}>
                             <Text style={[{fontSize: 16, color: 'black',}, styles.row_left]}>学院</Text>
                             <Text
@@ -106,7 +115,10 @@ export default class SelfInfo extends PageComponent {
                             flexDirection: 'row',
                             paddingTop: 10,
                             paddingBottom: 10,
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            borderRadius: 8,
+                            borderColor: '#c0c0c0',
+                            backgroundColor: '#fff'
                         }}>
                             <Text style={[{fontSize: 16, color: 'black',}, styles.row_left]}>院系</Text>
                             <Text
@@ -118,12 +130,14 @@ export default class SelfInfo extends PageComponent {
                             flexDirection: 'row',
                             paddingTop: 10,
                             paddingBottom: 10,
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            borderRadius: 8,
+                            borderColor: '#c0c0c0',
+                            backgroundColor: '#fff'
                         }}>
                             <Text style={[{fontSize: 16, color: 'black',}, styles.row_left]}>班级</Text>
                             <Text style={[{fontSize: 16, color: 'black',}, styles.row_right]}>{this.state.class}</Text>
                         </View>
-                        <View style={styles.separator}></View>
                     </View>
                 </ScrollView>
             </View>
@@ -133,8 +147,8 @@ export default class SelfInfo extends PageComponent {
 
 const styles = StyleSheet.create({
     separator: {
-        height: 1,
-        backgroundColor: '#c0c0c0'
+        height: 10,
+        backgroundColor: 'transparent'
     },
     row_left: {
         flex: 1,

@@ -52,41 +52,49 @@ export default class HotPanel extends Component{
                             }}>{title}</Text>
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            {/*<TouchableOpacity*/}
+                                {/*style={{marginRight: px2dp(15)}}*/}
+                                {/*onPress={this._refreshBtnCallback.bind(this)}*/}
+                                {/*activeOpacity={theme.btnActiveOpacity}>*/}
+                                {/*<Icon name="sync" color={theme.grayColor} size={px2dp(20)}/>*/}
+                            {/*</TouchableOpacity>*/}
+                            {/*<TouchableOpacity*/}
+                                {/*onPress={this._closeBtCallback.bind(this)}*/}
+                                {/*activeOpacity={theme.btnActiveOpacity}>*/}
+                                {/*<Icon name="x" color={theme.grayColor} size={px2dp(20)}/>*/}
+                            {/*</TouchableOpacity>*/}
                             <TouchableOpacity
                                 style={{marginRight: px2dp(15)}}
                                 onPress={this._refreshBtnCallback.bind(this)}
                                 activeOpacity={theme.btnActiveOpacity}>
-                                <Icon name="sync" color={theme.grayColor} size={px2dp(20)}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={this._closeBtCallback.bind(this)}
-                                activeOpacity={theme.btnActiveOpacity}>
-                                <Icon name="x" color={theme.grayColor} size={px2dp(20)}/>
+                                <Text style={{color: theme.themeColor, fontSize: theme.scrollView.fontSize}}>
+                                    {this.props.date}
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{height: 1 / PixelRatio.get(), backgroundColor: '#f1f1f1'}}></View>
-                    <View style={styles.list}>
-                        {
-                            data.map((item, index) => {
-                            if(Platform.OS === 'ios'){
-                            return(
-                                <TouchableOpacity
-                                    key={index}
-                                    onPress={this._hotPanelCallback.bind(this, item)}
-                                    activeOpacity={theme.btnActiveOpacity}>
-                                    {this._renderContent(item, index)}
-                                </TouchableOpacity>
-                            )}else if(Platform.OS === 'android'){
-                            return(
-                                <TouchableNativeFeedback
-                                    key={index}
-                                    onPress={this._hotPanelCallback.bind(this, item)}>
-                                    {this._renderContent(item, index)}
-                                </TouchableNativeFeedback>
-                            )}})
-                        }
-                    </View>
+                    {/*<View style={{height: 1 / PixelRatio.get(), backgroundColor: '#f1f1f1'}}></View>*/}
+                    {/*<View style={styles.list}>*/}
+                        {/*{*/}
+                            {/*data.map((item, index) => {*/}
+                            {/*if(Platform.OS === 'ios'){*/}
+                            {/*return(*/}
+                                {/*<TouchableOpacity*/}
+                                    {/*key={index}*/}
+                                    {/*onPress={this._hotPanelCallback.bind(this, item)}*/}
+                                    {/*activeOpacity={theme.btnActiveOpacity}>*/}
+                                    {/*{this._renderContent(item, index)}*/}
+                                {/*</TouchableOpacity>*/}
+                            {/*)}else if(Platform.OS === 'android'){*/}
+                            {/*return(*/}
+                                {/*<TouchableNativeFeedback*/}
+                                    {/*key={index}*/}
+                                    {/*onPress={this._hotPanelCallback.bind(this, item)}>*/}
+                                    {/*{this._renderContent(item, index)}*/}
+                                {/*</TouchableNativeFeedback>*/}
+                            {/*)}})*/}
+                        {/*}*/}
+                    {/*</View>*/}
                 </View>
             )
         }else{
@@ -95,33 +103,33 @@ export default class HotPanel extends Component{
     }
 
     _renderContent(item, index){
-        return(
-            <View>
-                <View style={styles.listItem}>
-                    <View style={{flex: 80, marginTop: px2dp(10)}}>
-                        <Text style={styles.content} numberOfLines={2}>{item.title}</Text>
-                        <View style={styles.infoBar}>
-                            <Icon name="heart" size={px2dp(13)} color={theme.grayColor}/>
-                            <Text style={styles.infoBarText}>{item.collectionCount}</Text>
-                            <Icon name="person" size={px2dp(12)} color={theme.grayColor}/>
-                            <Text style={styles.infoBarText}>{item.user.username}</Text>
-                            <Icon name="clock" size={px2dp(13)} color={theme.grayColor}/>
-                            <Text style={styles.infoBarText}>{item.time}</Text>
-                        </View>
-                    </View>
-                    <View style={{flex: 20, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        {item.screenshot ?
-                            <Image source={{uri: item.screenshot.url}}
-                                   style={styles.image}/>
-                            :
-                            <Image source={require('../image/user_article_no_data.png')}
-                                   style={styles.image}/>
-                        }
-                    </View>
-                </View>
-                <View style={{height: 1/PixelRatio.get(), backgroundColor: '#f1f1f1'}}></View>
-            </View>
-        );
+        // // return(
+        // //     <View>
+        // //         <View style={styles.listItem}>
+        // //             <View style={{flex: 80, marginTop: px2dp(10)}}>
+        // //                 <Text style={styles.content} numberOfLines={2}>{item.title}</Text>
+        // //                 <View style={styles.infoBar}>
+        // //                     <Icon name="heart" size={px2dp(13)} color={theme.grayColor}/>
+        // //                     <Text style={styles.infoBarText}>{item.collectionCount}</Text>
+        // //                     <Icon name="person" size={px2dp(12)} color={theme.grayColor}/>
+        // //                     <Text style={styles.infoBarText}>{item.user.username}</Text>
+        // //                     <Icon name="clock" size={px2dp(13)} color={theme.grayColor}/>
+        // //                     <Text style={styles.infoBarText}>{item.time}</Text>
+        // //                 </View>
+        // //             </View>
+        // //             <View style={{flex: 20, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
+        // //                 {item.screenshot ?
+        // //                     <Image source={{uri: item.screenshot.url}}
+        // //                            style={styles.image}/>
+        // //                     :
+        // //                     <Image source={require('../image/user_article_no_data.png')}
+        // //                            style={styles.image}/>
+        // //                 }
+        // //             </View>
+        // //         </View>
+        // //         <View style={{height: 1/PixelRatio.get(), backgroundColor: '#f1f1f1'}}></View>
+        // //     </View>
+        // );
     }
 
     _closeBtCallback(){
@@ -133,7 +141,7 @@ export default class HotPanel extends Component{
     }
 
     _hotPanelCallback(rowData){
-        MainPage.switchToWebViewPage(rowData);
+        //MainPage.switchToWebViewPage(rowData);
     }
 }
 

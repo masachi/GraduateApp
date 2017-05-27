@@ -32,7 +32,7 @@ export default class TabBar extends Component {
 
     changeActiveTab() {
         let show_day = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-        let time = new Date();
+        let time = new Date('2016-04-10');
         let month = time.getMonth() + 1;
         let date = time.getDate();
         let day = time.getDay();

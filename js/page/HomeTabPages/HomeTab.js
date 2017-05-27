@@ -7,7 +7,7 @@ import ListViewForHomeTab from '../../component/ListViewForHome';
 import ListViewForOtherTab from '../../component/SimpleListView';
 import computeTime from '../../util/computeTime';
 import * as theme from '../../config/theme';
-import Toast from '@remobile/react-native-toast';
+import Toast from 'react-native-root-toast';
 
 export default class HomeTab extends Component {
     constructor(props) {
@@ -53,7 +53,7 @@ export default class HomeTab extends Component {
         if (!this.state.refreshing || this.state.loadedData) {
             return (
                 <View>
-                    <HotPanel title={tabTag} contents={this.state.dataBlob}/>
+                    <HotPanel title={tabTag} contents={this.state.dataBlob} date={this.props.date}/>
                     <ListViewForOtherTab contents={this.state.dataBlob}/>
                 </View>
             );
@@ -107,7 +107,14 @@ export default class HomeTab extends Component {
             })
             .catch((err) => {
                 this._onDismissRefresh();
-                ToastAndroid.show('网络错误', 30000);
+                Toast.show('网络错误', {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                });
             });
     }
 }

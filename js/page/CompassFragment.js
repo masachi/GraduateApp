@@ -24,6 +24,7 @@ import SearchBar from '../component/SearchBar';
 import Swiper from 'react-native-swiper';
 import ImageButton from '../component/ImageButtonWithText';
 //import ListView from '../component/SimpleListView';
+import Toast from 'react-native-root-toast';
 
 const bannerImages = [
     require('../image/banner1.jpg'),
@@ -173,7 +174,14 @@ export default class CompassFragment extends Component {
             .catch((err) => {
                 this._onDismissRefresh();
                 //ToastAndroid.show(err.toString());
-                ToastAndroid.show('网络错误', 30000);
+                Toast.show('网络错误', {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                });
             });
 
     }
