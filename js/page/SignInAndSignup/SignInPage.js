@@ -121,7 +121,7 @@ export default class SignInPage extends Component {
                 </View>
                 <View style={styles.logo}>
                     <Image style={{width: px2dp(45), height: px2dp(45)}}
-                           source={require('../../image/ic_login_logo.png')}/>
+                           source={require('../../image/icon.png')}/>
                 </View>
                 <View style={styles.editGroup}>
                     <View style={styles.editView1}>
