@@ -5,6 +5,7 @@ import {Text, View, StyleSheet, Platform, PixelRatio, ListView, TouchableOpacity
 import px2dp from '../util/px2dp';
 import * as theme from '../config/theme';
 import MainPage from '../page/MainPage';
+import CourseInfoPage from '../page/CourseInfoPage'
 
 export default class SimpleListView extends Component{
     static propTypes = {
@@ -27,7 +28,12 @@ export default class SimpleListView extends Component{
     }
 
     _itemClickCallback(rowData){
-
+        this.props.navigator.push({
+            component: CourseInfoPage,
+            params: {
+                data: rowData,
+            }
+        });
     }
 
     _renderItem(rowData, sectionID, rowID, highlightRow){
