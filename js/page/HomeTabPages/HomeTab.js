@@ -54,7 +54,7 @@ export default class HomeTab extends Component {
             return (
                 <View>
                     <HotPanel title={tabTag} contents={this.state.dataBlob} date={this.props.date}/>
-                    <ListViewForOtherTab contents={this.state.dataBlob}/>
+                    <ListViewForOtherTab contents={this.state.dataBlob} navigator = {this.props.navigator}/>
                 </View>
             );
         }

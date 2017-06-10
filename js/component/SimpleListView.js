@@ -30,7 +30,7 @@ export default class SimpleListView extends Component{
     _itemClickCallback(rowData){
         this.props.navigator.push({
             component: CourseInfoPage,
-            params: {
+            args: {
                 data: rowData,
             }
         });

@@ -32,7 +32,7 @@ export default class WebViewNavigationBar extends Component{
                     onPress={this._userNameClickCallback.bind(this)}
                     activeOpacity={0.9}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Avatar size={px2dp(30)} image={{uri: userInfo.avatar_large}}/>
+                        {/*<Avatar size={px2dp(30)} image={{uri: userInfo.avatar_large}}/>*/}
                         <Text style={styles.title}>{userInfo.username}</Text>
                     </View>
                 </TouchableOpacity>
