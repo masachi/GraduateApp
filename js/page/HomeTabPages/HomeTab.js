@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, ScrollView, RefreshControl, ToastAndroid} from 'react-native';
+import {Text, StyleSheet, View, ScrollView, RefreshControl, ToastAndroid, DeviceEventEmitter} from 'react-native';
 import HotPanel from '../../component/HotPanel';
 import ListViewForHomeTab from '../../component/ListViewForHome';
 import ListViewForOtherTab from '../../component/SimpleListView';
@@ -21,7 +21,7 @@ export default class HomeTab extends Component {
         this._onDismissRefresh = this._onDismissRefresh.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(){
         this._fetchData();
     }
 
@@ -54,7 +54,7 @@ export default class HomeTab extends Component {
             return (
                 <View>
                     <HotPanel title={tabTag} contents={this.state.dataBlob} date={this.props.date}/>
-                    <ListViewForOtherTab contents={this.state.dataBlob} navigator = {this.props.navigator}/>
+                    <ListViewForOtherTab contents={this.state.dataBlob} navigator = {this.props.navigator} date={this.props.date}/>
                 </View>
             );
         }

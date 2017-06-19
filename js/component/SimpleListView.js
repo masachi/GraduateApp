@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {Text, View, StyleSheet, Platform, PixelRatio, ListView, TouchableOpacity, TouchableNativeFeedback, Image} from 'react-native';
+import {Text, View, StyleSheet, Platform, PixelRatio, ListView, TouchableOpacity, TouchableNativeFeedback, Image, DeviceEventEmitter} from 'react-native';
 import px2dp from '../util/px2dp';
 import * as theme from '../config/theme';
 import MainPage from '../page/MainPage';
@@ -32,6 +32,7 @@ export default class SimpleListView extends Component{
             component: CourseInfoPage,
             args: {
                 data: rowData,
+                date: this.props.date
             }
         });
     }
