@@ -47,7 +47,6 @@ export default class NewComments extends PageComponent{
                   body: body
               }).then((response) => response.json())
                   .then((result) => {
-                      this.setState({loading: false});
                       //alert(result);
                       if (result.code === 200) {
                           //DeviceEventEmitter.emit('refresh');
@@ -66,7 +65,6 @@ export default class NewComments extends PageComponent{
                       }
                   })
                   .catch((err) => {
-                      this.setState({loading: false});
                       Toast.show(err, {
                           duration: Toast.durations.LONG,
                           position: Toast.positions.BOTTOM,

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Platform, ToastAndroid ,BackAndroid} from 'react-native';
+import {Text, View, StyleSheet, Platform, ToastAndroid ,BackAndroid, PermissionsAndroid} from 'react-native';
 import theme from '../config/theme';
 import px2dp from '../util/px2dp';
 import ScrollableTabView, {DefaultTabBar}from 'react-native-scrollable-tab-view';
@@ -13,6 +13,8 @@ import {AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
 import SignInPage from './SignInAndSignup/SignInPage';
 var moment = require('moment');
+import Pushy from 'pushy-react-native';
+import Toast from 'react-native-root-toast';
 
 export default class HomeFragment extends Component {
     constructor(props) {
@@ -121,6 +123,128 @@ export default class HomeFragment extends Component {
 
     componentDidMount() {
         RCTDeviceEventEmitter.addListener('valueChange', this._handleTabNames);
+
+        Pushy.listen();
+        // Check whether the user has granted the app the WRITE_EXTERNAL_STORAGE permission
+        // PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE).then((granted) => {
+        //     if (!granted) {
+        //         // Request the WRITE_EXTERNAL_STORAGE permission so that the Pushy SDK will be able to persist the device token in the external storage
+        //         PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE).then((result) => {
+        //             // User denied permission?
+        //             if (result !== PermissionsAndroid.RESULTS.GRANTED) {
+        //                 // Possibly ask the user to grant the permission
+        //             }
+        //         });
+        //     }
+        // });
+
+        // Register the device for push notifications
+        Pushy.register().then(async (deviceToken) => {
+            // Print device token to console
+            console.log('Pushy device token: ' + deviceToken);
+
+            // Send the token to your backend server via an HTTP GET request
+            //await fetch('https://your.api.hostname/register/device?token=' + deviceToken);
+
+            // Succeeded, do something to alert the user
+            let data = [];
+            let body = 'username=' + global.username + '&' + 'token=' + deviceToken;
+            var url = 'http://182.254.152.66:10080/api.php?id=user&method=device';
+            //alert(body);
+            fetch(url, {
+                timeout: 10000,
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: body
+            }).then((response) => response.json())
+                .then((result) => {
+                    if (result.code === 200) {
+                        //DeviceEventEmitter.emit('refresh');
+                        Toast.show('Pushy Register Success', {
+                            duration: 1000,
+                            position: Toast.positions.BOTTOM,
+                            shadow: true,
+                            animation: true,
+                            hideOnPress: true,
+                            delay: 0,
+                        });
+                    }
+                    else {
+                        Toast.show('Pushy Register Failed', {
+                            duration: 3000,
+                            position: Toast.positions.BOTTOM,
+                            shadow: true,
+                            animation: true,
+                            hideOnPress: true,
+                            delay: 0,
+                        });
+                    }
+                })
+                .catch((err) => {
+                    Toast.show(err, {
+                        duration: Toast.durations.LONG,
+                        position: Toast.positions.BOTTOM,
+                        shadow: true,
+                        animation: true,
+                        hideOnPress: true,
+                        delay: 0,
+                    });
+                });
+
+            let data2 = [];
+            let body2 = 'username=' + global.username;
+            var url2 = 'http://182.254.152.66:10080/api.php?id=course&method=push';
+            //alert(body);
+            fetch(url2, {
+                timeout: 10000,
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: body2
+            }).then((response) => response.json())
+                .then((result) => {
+                    //alert(result);
+                    // if (result.code === 200) {
+                    //     //DeviceEventEmitter.emit('refresh');
+                    //     Toast.show('Pushy Register Success', {
+                    //         duration: 1000,
+                    //         position: Toast.positions.BOTTOM,
+                    //         shadow: true,
+                    //         animation: true,
+                    //         hideOnPress: true,
+                    //         delay: 0,
+                    //     });
+                    // }
+                    // else {
+                    //     Toast.show('Pushy Register Failed', {
+                    //         duration: 3000,
+                    //         position: Toast.positions.BOTTOM,
+                    //         shadow: true,
+                    //         animation: true,
+                    //         hideOnPress: true,
+                    //         delay: 0,
+                    //     });
+                    // }
+                })
+                .catch((err) => {
+                    Toast.show(err, {
+                        duration: Toast.durations.LONG,
+                        position: Toast.positions.BOTTOM,
+                        shadow: true,
+                        animation: true,
+                        hideOnPress: true,
+                        delay: 0,
+                    });
+                });
+        }).catch((err) => {
+            // Handle registration errors
+            console.error(err);
+        });
     }
 
     componentWillUnmount() {
