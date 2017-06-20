@@ -64,3 +64,6 @@
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
+
+-dontwarn me.pushy.**
+-keep class me.pushy.** { *; }
