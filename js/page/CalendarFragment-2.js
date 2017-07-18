@@ -11,12 +11,6 @@ import{
     StyleSheet
 } from 'react-native';
 
-import PageComponent from './BackPageComponent';
-import NavigationBar from '../component/SimpleNavigationBar';
-import MaterCalendarView from '../config/NativeModule/MaterCalendar/RCTMaterialCalendarView';
-import theme from '../config/theme';
-import ListViewForOtherTab from '../component/SimpleListView';
-import ListViewForHome from "../component/ListViewForHome";
 var moment = require('moment');
 
 import {Agenda} from 'react-native-calendars';
@@ -25,17 +19,17 @@ import {Agenda} from 'react-native-calendars';
 const locale = {
     name: 'zh',
     config: {
-        months : "一月 二月 三月 四月 五月 六月 七月 八月 九月 十月 十一月 十二月".split(" "),
-        monthsShort : "一 二 三 四 五 六 七 八 九 十 十一 十二".split(" "),
-        weekdays : "星期天 星期一 星期二 星期三 星期四 星期五 星期六".split(" "),
-        weekdaysShort : "日 一 二 三 四 五 六".split(" "),
-        week : {
-            dow : 1, // Monday is the first day of the week.
+        months: "一月 二月 三月 四月 五月 六月 七月 八月 九月 十月 十一月 十二月".split(" "),
+        monthsShort: "一 二 三 四 五 六 七 八 九 十 十一 十二".split(" "),
+        weekdays: "星期天 星期一 星期二 星期三 星期四 星期五 星期六".split(" "),
+        weekdaysShort: "日 一 二 三 四 五 六".split(" "),
+        week: {
+            dow: 1, // Monday is the first day of the week.
         }
     }
 };
 
-export default class CalendarFragment extends PageComponent {
+export default class CalendarFragment extends Component {
     // 构造
     constructor(props) {
         super(props);
@@ -44,7 +38,8 @@ export default class CalendarFragment extends PageComponent {
             dataBlob: [],
             date: '',
             selectDay: [],
-            dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+            dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+            items: {}
         };
 
         this.getCurrentDay = this.getCurrentDay.bind(this);
@@ -71,12 +66,19 @@ export default class CalendarFragment extends PageComponent {
     componentDidMount() {
         this._fetchData(moment().format("YYYY-MM-DD").toString());
         this._fetchDate();
-        this.setState({dataSource: this.state.dataSource.cloneWithRows([1,2,3,4])})
+        this.setState({dataSource: this.state.dataSource.cloneWithRows([1, 2, 3, 4])})
     }
 
     _renderRow(rowData) {
         return (
-            <View style={{flex: 1, flexDirection: 'column', marginHorizontal: 20, backgroundColor: '#fff', borderRadius: 8, borderColor: '#c0c0c0'}}>
+            <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                marginHorizontal: 20,
+                backgroundColor: '#fff',
+                borderRadius: 8,
+                borderColor: '#c0c0c0'
+            }}>
                 <View style={{flex: 1, paddingVertical: 10, flexDirection: 'row'}}>
                     <Text style={{fontSize: 16, color: 'black'}}>{rowData.course}</Text>
                     <Text style={{fontSize: 16, color: 'black', paddingLeft: 30}}>{rowData.date}</Text>
@@ -84,17 +86,18 @@ export default class CalendarFragment extends PageComponent {
                 </View>
                 <View style={{flex: 1, paddingVertical: 10, flexDirection: 'row', justifyContent: 'flex-end'}}>
                     <Text style={{fontSize: 14, color: 'grey', textAlign: 'right'}}>{rowData.location}</Text>
-                    <Text style={{fontSize: 14, color: 'grey', paddingLeft: 40,textAlign: 'right'}}>{rowData.time}</Text>
+                    <Text
+                        style={{fontSize: 14, color: 'grey', paddingLeft: 40, textAlign: 'right'}}>{rowData.time}</Text>
                 </View>
             </View>
         );
     }
 
-    _fetchDate(){
+    _fetchDate() {
         let date_data = [];
         var date_url = 'http://182.254.152.66:10080/api.php?id=calendar&method=date_list';
         //alert(body);
-        let dateBody = 'username=' + global.username;
+        let dateBody = 'username=' + '1304010330';
 
         fetch(date_url, {
             timeout: 10000,
@@ -109,12 +112,17 @@ export default class CalendarFragment extends PageComponent {
         }).then((result) => {
             //alert(result);
             if (result.code === 200) {
-                result.data.forEach((value) => {
-                    date_data.push(moment(value).format("YYYY/MM/DD"));
-                });
-                this.setState({selectDay: date_data});
+                // result.data.forEach((value) => {
+                //     date_data.push({
+                //         "date": moment(value).format("YYYY-MM-DD"),
+                //         "text": 'this time has a message',
+                //     });
+                // });
+                // this.setState({selectDay: date_data});
+                this.setState({selectDay: result.data});
             }
         }).catch((err) => {
+            console.error(err);
             ToastAndroid.show('网络错误', 30000);
         });
     }
@@ -154,7 +162,7 @@ export default class CalendarFragment extends PageComponent {
 
     }
 
-    onDateChange(event){
+    onDateChange(event) {
         // this.setState({date: moment(event.date).format("YYYY-MM-DD")});
 
         this._fetchData(moment(event.date).format("YYYY-MM-DD"));
@@ -199,27 +207,66 @@ export default class CalendarFragment extends PageComponent {
         );
     }
 
-    renderItem(item){
+    renderItem(item) {
         return (
             <View style={[styles.item, {height: item.height}]}><Text>{item.name}</Text></View>
         );
     }
 
-    // loadItems(day){
-    //
-    // }
+    loadItems(day) {
+        setTimeout(() => {
+            for (let i = -15; i < 85; i++) {
+                const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+                const strTime = this.timeToString(time);
+                if (!this.state.items[strTime]) {
+                    this.state.items[strTime] = [];
+                    const numItems = Math.floor(Math.random() * 5);
 
-    render(){
-        return(
+                    for (let j = 0; j < numItems; j++) {
+                        this.state.items[strTime].push({
+                            name: 'Item for ' + strTime,
+                            height: Math.max(50, Math.floor(Math.random() * 150))
+                        });
+                    }
+                }
+            }
+            //console.log(this.state.items);
+            const newItems = {};
+            Object.keys(this.state.items).forEach(key => {
+                newItems[key] = this.state.items[key];
+            });
+            this.setState({
+                items: newItems
+            });
+        }, 1000);
+        // console.log(`Load Items for ${day.year}-${day.month}`);
+
+
+        // const newItems = {};
+        //
+        // this.state.selectDay.forEach((value) => {
+        //     newItems[value.date] = [{
+        //         "text": value.text,
+        //     }]
+        // });
+        //
+        // this.setState({
+        //     items: newItems
+        // });
+        // console.log(day);
+    }
+
+    timeToString(time) {
+        const date = new Date(time);
+        return date.toISOString().split('T')[0];
+    }
+
+    render() {
+        return (
             <Agenda
-                items={
-                    {
-                        '2017-05-22': [{text: 'item 1 - any js object'}],
-                        '2017-05-23': [{text: 'item 2 - any js object'}],
-                        '2017-05-24': [],
-                        '2017-05-25': [{text: 'item 3 - any js object'},{text: 'any js object'}],
-                    }}
+                items={this.state.items}
                 selected={moment().format('YYYY/MM/DD')}
+                loadItemsForMonth={this.loadItems.bind(this)}
                 renderItem={this.renderItem.bind(this)}
                 renderEmptyDate={this.renderEmptyDate.bind(this)}
                 rowHasChanged={this.rowHasChanged.bind(this)}
@@ -251,7 +298,7 @@ const styles = StyleSheet.create({
     },
     emptyDate: {
         height: 15,
-        flex:1,
+        flex: 1,
         paddingTop: 30
     },
     item: {
